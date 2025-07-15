@@ -7,6 +7,9 @@ certifi
 # pymongo[srv]==3.6
 dill
 mlflow
+dagshub
+fastapi
+uvicorn
 pyaml
 
 

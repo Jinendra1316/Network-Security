@@ -22,10 +22,14 @@ from sklearn.ensemble import (
     RandomForestClassifier,
 )
 
+
+# import joblib
 import mlflow
+#ml uli
 # from urllib.parse import urlparse
 
-
+import dagshub
+dagshub.init(repo_owner='Jinendra1316', repo_name='Network-Security', mlflow=True)
 
 class ModelTrainer:
     def __init__(self,model_trainer_config:ModelTrainerConfig,data_transformation_artifact:DataTransformationArtifact):
@@ -53,6 +57,13 @@ class ModelTrainer:
             mlflow.log_metric("precision",precision_score)
             mlflow.log_metric("recall_score",recall_score)
             mlflow.sklearn.log_model(best_model,"model")
+        #        # 1. dump the model **in the CWD**
+        #     model_path = "model.pkl"
+        #     joblib.dump(best_model, model_path)
+
+        # # 2. upload it
+        #     mlflow.log_artifact(model_path) 
+        
             # Model registry does not work with file store
             # if tracking_url_type_store != "file":
 
@@ -134,8 +145,8 @@ class ModelTrainer:
 
         Network_Model=NetworkModel(preprocessor=preprocessor,model=best_model)
         save_object(self.model_trainer_config.trained_model_file_path,obj=NetworkModel)
-        # #model pusher
-        # save_object("final_model/model.pkl",best_model)
+        # model pusher
+        save_object("final_model/model.pkl",best_model)
         
 
         ## Model Trainer Artifact
